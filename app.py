@@ -42,7 +42,7 @@ def prcp():
 
 #filtering for most recent year of prcp data, excluding nulls
     prcp_data = session.query(Measurements.date,Measurements.prcp).\
-    filter(Measurements.date > "2016-08-23").\
+    filter(Measurements.date >= "2016-08-23").\
         filter(Measurements.prcp != None).\
         order_by(Measurements.date).all()
     
@@ -91,7 +91,7 @@ def tobs():
 
     tobs_data = session.query(Measurements.date,Measurements.tobs).\
         filter(Measurements.station == 'USC00519281').\
-            filter(Measurements.date > "2016-08-18").\
+            filter(Measurements.date >= "2016-08-18").\
             order_by(Measurements.date).all()
 
     session.close()
@@ -120,7 +120,7 @@ def temp_stats_1(start_date):
     session.close()
 
     return f"Min Temp: {temp_data}"
-
+    return f"Max Temp:"
 
 
 if __name__ == "__main__":
