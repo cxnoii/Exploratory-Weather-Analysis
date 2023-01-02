@@ -25,15 +25,18 @@ def index():
     return(
         f"Welcome to the Hawaii Weather API!<br/>"
         f"Available Routes:<br/>"
-        f"/prcp<br/>"
-        f"/stations<br/>"
-        f"/tobs"
+        f"/api/prcp<br/>"
+        f"/api/stations<br/>"
+        f"/api/tobs<br/>"
+        f"<br/>Entering in a date will return the highest, lowest, and average temperatures between the interval of the specified start date and the most recent date.<br/>"
+        f"example:<br/>"
+        f"/api/<start_date>"
     )
 
 #--------------------
 # Precipation route |
 #--------------------
-@app.route("/prcp")
+@app.route("/api/prcp")
 def prcp():
     session = Session(engine)
 
@@ -58,7 +61,7 @@ def prcp():
 #----------------
 # Station route |
 #----------------
-@app.route("/stations")
+@app.route("/api/stations")
 def stations():
     session = Session(engine)
 
@@ -82,7 +85,7 @@ def stations():
 #--------------------
 # Temperature route |
 #--------------------
-@app.route("/tobs")
+@app.route("/api/tobs")
 def tobs():
     session = Session(engine)
 
@@ -101,6 +104,23 @@ def tobs():
         tobs_list.append(tobs_dict)
     
     return jsonify(tobs_list)
+
+#---------------------------
+# Dynamic, Start Date Only |
+#---------------------------
+@app.route("/api/<start_date>")
+def temp_stats_1(start_date):
+
+    session = Session(engine)
+
+    temp_data = session.query(Measurements.date,func.min(Measurements.tobs)).\
+        filter(Measurements.date > start_date).\
+            filter(Measurements.date != None).all()
+    
+    session.close()
+
+    return f"Min Temp: {temp_data}"
+
 
 
 if __name__ == "__main__":
