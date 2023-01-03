@@ -124,17 +124,20 @@ def temp_stats_1(start_date):
 
     session = Session(engine)
 
+#calculates min, max, avg from entered start date to the last data point in the measurements data
     temp_stats = session.query(func.min(Measurements.tobs),func.max(Measurements.tobs),func.avg(Measurements.tobs)).\
         filter(Measurements.date > start_date).all()
 
     session.close()
-    
+
+#returns min, max, avg if the date given is before the date of the last data point in the measurements data
     try: 
         return (
         f"Lowest Temperature: {temp_stats[0][0]}<br/>"
         f"Highest Temperature: {temp_stats[0][1]}<br/>"
         f"Average Temperature: {round(temp_stats[0][2],2)}"
     )
+#running into typeError because of the round function used in avg, accounts for this and tells user valid date range
     except TypeError:
         return (
             f"Oop, that date is outside the data.<br/>"
@@ -147,11 +150,11 @@ def temp_stats_1(start_date):
 #-------------------------------
 # Dynamic, Start Date/End Date |
 #-------------------------------
-
 @app.route("/api/<start_date>/<end_date>")
 def temp_stats_2(start_date, end_date):
     session = Session(engine)
 
+#same code as the start date only route, only difference being the extra filter for end_date
     temp_stats = session.query(func.min(Measurements.tobs),func.max(Measurements.tobs),func.avg(Measurements.tobs)).\
         filter(Measurements.date >= start_date).\
             filter(Measurements.date <= end_date).all()
