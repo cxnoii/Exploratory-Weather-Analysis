@@ -29,10 +29,21 @@ def index():
         f"/api/stations<br/>"
         f"/api/tobs<br/>"
         f"<br/>Entering in a date will return the highest, lowest, and average temperatures between the interval of the specified start date and the most recent date.<br/>"
-        f"example:<br/>"
-        f"/api/<start_date>"
+        f"ex:<br/>"
+        f"/api/2017-08-13<br/>"
+        f"<br/>Returns:<br/>"
+        f"Lowest Temperature: 70.0<br/>"
+        f"Highest Temperature: 85.0<br/>" 
+        f"Average Temperature: 78.475<br/>"
+        f"<br/>Entering in a set of dates separated by '/' will return the highest, lowest, and average temperature in the date ranges provided."
+        f"<br/>ex:"
+        f"/api/2017-08-03/2017-08-10<br/>"
+        f"<br/>Returns:<br/>"
+        f"Lowest Temperature: 71.0<br/>"
+        f"Highest Temperature: 83.0<br/>" 
+        f"Average Temperature: 79.61<br/>"
     )
-
+    
 #--------------------
 # Precipation route |
 #--------------------
@@ -113,14 +124,51 @@ def temp_stats_1(start_date):
 
     session = Session(engine)
 
-    temp_data = session.query(Measurements.date,func.min(Measurements.tobs)).\
-        filter(Measurements.date > start_date).\
-            filter(Measurements.date != None).all()
+    temp_stats = session.query(func.min(Measurements.tobs),func.max(Measurements.tobs),func.avg(Measurements.tobs)).\
+        filter(Measurements.date > start_date).all()
+
+    session.close()
     
+    try: 
+        return (
+        f"Lowest Temperature: {temp_stats[0][0]}<br/>"
+        f"Highest Temperature: {temp_stats[0][1]}<br/>"
+        f"Average Temperature: {round(temp_stats[0][2],2)}"
+    )
+    except TypeError:
+        return (
+            f"Oop, that date is outside the data.<br/>"
+            f"The most recent data point was recorded on 2017-08-23, try a date before that!"
+        )
+
+
+    
+
+#-------------------------------
+# Dynamic, Start Date/End Date |
+#-------------------------------
+
+@app.route("/api/<start_date>/<end_date>")
+def temp_stats_2(start_date, end_date):
+    session = Session(engine)
+
+    temp_stats = session.query(func.min(Measurements.tobs),func.max(Measurements.tobs),func.avg(Measurements.tobs)).\
+        filter(Measurements.date >= start_date).\
+            filter(Measurements.date <= end_date).all()
+
     session.close()
 
-    return f"Min Temp: {temp_data}"
-    return f"Max Temp:"
+    try: 
+        return (
+        f"Lowest Temperature: {temp_stats[0][0]}<br/>"
+        f"Highest Temperature: {temp_stats[0][1]}<br/>"
+        f"Average Temperature: {round(temp_stats[0][2],2)}"
+    )
+    except TypeError:
+        return (
+            f"Oop, that date is outside the data.<br/>"
+            f"The most recent data point was recorded on 2017-08-23, try some dates before that!"
+        )
 
 
 if __name__ == "__main__":
