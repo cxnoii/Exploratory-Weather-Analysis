@@ -6,4 +6,6 @@ The goal of this project is to analyze data from Hawaii Weather Stations to visu
 ![flask](https://user-images.githubusercontent.com/114107454/224617784-8673f751-af0a-468c-b66a-569a08617ffd.jpg)
 
 ## Resources
-[Weather Data Article](https://journals.ametsoc.org/view/journals/atot/29/7/jtech-d-11-00103_1.xml)
+* [Weather Data Article](https://journals.ametsoc.org/view/journals/atot/29/7/jtech-d-11-00103_1.xml)
+
+## Findings
