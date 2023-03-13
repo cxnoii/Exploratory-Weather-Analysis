@@ -28,3 +28,13 @@ The goal of this project is to analyze data from Hawaii Weather Stations to visu
 5. Queries were then designed to find the dates with highest and lowest historical temperatures as well as the average of recorded temperature by the most active station (ID: 'USC00519281').
 
 ![flask 4](https://user-images.githubusercontent.com/114107454/224625402-925f1654-ca44-4648-a4fe-6b7da8511bca.jpg)
+
+6. Weather recorded from this station for the most recent year available in the dataset was then saved and converted to a dataframe with the use of query below:
+
+![flask5](https://user-images.githubusercontent.com/114107454/224625686-7f5f5d89-8021-40c5-8bba-1d7685e12902.jpg)
+
+
+7. Using matplotlib, a histogram of these temperatures were created to see the frequency of temperatures recorded by this station from 08-24-2016 to 08-24-2017. The graph implies that the most frequent temperatures are within 73-77°F.
+
+![flask 6](https://user-images.githubusercontent.com/114107454/224625957-8bc81a7d-3af0-4afb-9365-93b79cc950eb.jpg)
+
