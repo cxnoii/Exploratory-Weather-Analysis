@@ -13,6 +13,7 @@ The goal of this project is to analyze data from Hawaii Weather Stations to visu
 ![flask code1](https://user-images.githubusercontent.com/114107454/224622315-c8213de9-f331-44fd-b0c5-cf6b2bd4d88f.jpg)
 
 2. The first point of interest was the amount of precipitation recorded. A query was designed to return the date and amount of precipitation for the most recent year available in the dataset. The results of the query were then saved to a Pandas dataframe and the date column was converted to datetime format. 
+
 ![flask_code](https://user-images.githubusercontent.com/114107454/224622827-09335bb0-86af-453d-8935-50590e11a745.jpg)
 
 3. The precipitation data was then plotted using matplotlib.
