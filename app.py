@@ -23,8 +23,8 @@ Stations = Base.classes.station
 @app.route("/")
 def index():
     return(
-        f"Welcome to the Hawaii Weather API!<br/>"
-        f"Available Routes:<br/>"
+        f"<b>Welcome to the Hawaii Weather API!</b><br/>"
+        f"<b>Available Routes:</b><br/>"
         f"/api/prcp<br/>"
         f"/api/stations<br/>"
         f"/api/tobs<br/>"
